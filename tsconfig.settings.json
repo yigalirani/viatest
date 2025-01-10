@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "allowArbitraryExtensions":true,
+    "target": "es2022",
+    "lib": [
+       "ES2023"
+    ],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "strictFunctionTypes": true,
+    "module": "CommonJS",
+    "allowImportingTsExtensions":true,
+    "esModuleInterop":true,
+    "noImplicitAny": true, 
+    "alwaysStrict":true,
+    "noImplicitReturns":true,
+    "strictNullChecks":true,
+    "noUncheckedIndexedAccess"     : false, //hard to do for now added to backlog
+    "noErrorTruncation"            : true,
+    "declaration": true,
+    "stripInternal": true,
+    "isolatedModules": true,
+    "emitDeclarationOnly": true,
+    "declarationMap"               : true,
+    "strictPropertyInitialization" : true,
+    "useUnknownInCatchVariables": true,
+    "noImplicitThis":true,
+    "skipLibCheck": true,
+  },
+  "exclude": ["node_modules"],
+}

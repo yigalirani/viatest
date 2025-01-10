@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.settings.json",
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable","ES2023"],
+    "types": ["chrome"],
+    "noUncheckedIndexedAccess"     : true,
+    "paths":{
+      "server":["../types/server/src/"]
+    },
+    "rootDir":".",
+    "outDir": "../types/main"
+  },
+  "include":["src"]
+}

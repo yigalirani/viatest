@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "watch_build":"nodemon --watch src --watch build.mjs --ext ts build.mjs",
+    "watch_run": "nodemon --watch dist/index.js dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+
+
+    "express": "^4.21.0",
+    "varlog": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
+  }
+}

@@ -1,0 +1,12 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: white ;
+}
+li{
+  border: 1px solid black;
+  margin: 3px;
+  background-color: #ffd9ce;
+  padding: 10px;
+}
