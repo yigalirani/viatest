@@ -1,19 +1,18 @@
-interface  Trip{
+export interface  Trip{
   trip_id: number;
   start:number;//between 0 and 24
   end:number;//between 0 and 24, must be greater than start
   bus_id: number;
+  conflicts?: boolean;
 }
-interface   Bus {  
+
+export interface   Bus {  
   bus_id: number;
   trips: Trip[];
+  conflicts?: boolean;
 }
-export interface Trips {  // optimized for rendering and editing. if saved on sql, might need some normalization
-  trips: Trip[];
-}
-export interface Buses {  //derived from trips, might not be used in the server
-  bus: Bus[];
-}
+
+
 
 /* on initial paint:
  loop ove over buses, for each bus, loop over trips, for each trip, render a div with the trip info

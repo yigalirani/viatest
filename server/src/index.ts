@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import path from 'path';
 import {starting_schedule} from './data'
-export type {Trips} from './api'
+export type {Trip,Bus} from './api'
 
 const app = express();
 const port = 80;
