@@ -2,7 +2,7 @@ import type {Trip} from './api';
 export const starting_schedule:Trip[]=[
   {
     trip_id: 1,
-    start:6,
+    start:0,
     end:9.1,
     bus_id: 1,
   },

@@ -9,6 +9,7 @@ function calc_conflicts(bus:Bus){
   for (const trip of bus.trips.slice(1,-1)){
     if (trip.start<last_trip.end){
       trip.conflicts=true;
+      last_trip.conflicts=true;
       bus.conflicts=true;
     }
     last_trip=trip;
@@ -29,18 +30,34 @@ function conflict_class(conflicts:boolean|undefined){
     return ' conflicts'
   return ''
 }
-function percent(a:number){
-  return `${a/24*100}%`
+const root = document.documentElement;
+const css={
+  row_height:0,
+  row_number_width:0,
+  trip_height:0,
+  row_width:0
+}
+for (const key of Object.keys(css) as (keyof typeof css)[])
+  css[key]=parseInt(getComputedStyle(root).getPropertyValue('--'+key))
+
+// Get the value of a CSS variable
+function make_style(a:Record<string,number>){
+  return 'style='+Object.entries(a).map(([k,v])=>`${k}:${Math.round(v)}px`).join(';')
 }
 function render_trip(trip:Trip){
-  const {trip_id,start,end,conflicts}=trip;
-  return `<div style="left:${percent(start)};width:${percent(end-start)}" draggable=true class='trip${conflict_class(conflicts)}'>${trip_id}</div>`
+  const {trip_id,start,end,conflicts,bus_id}=trip;
+  const left=start/24*css.row_width+css.row_number_width;
+  const width=(end-start)/24*css.row_width;
+  const top=bus_id*css.row_height-(css.row_height+css.trip_height)/2;
+
+  const style=make_style({left,width,top})
+  return `<div id=${trip_id}trip ${style} draggable=true class='trip${conflict_class(conflicts)}'>${trip_id}</div>`
 }
 
 function render_bus(bus:Bus){
-  const {bus_id,trips,conflicts}=bus
-  const rendered_trips=trips.map(render_trip).join('\n')
-  return `<tr class=bus><td>${bus_id}</td><td class='bus${conflict_class(conflicts)}' id=bus${bus_id}>${rendered_trips}</td></tr>`
+  const {bus_id,conflicts}=bus
+  
+  return `<tr ><td>${bus_id}</td><td class='bus${conflict_class(conflicts)}' id=bus${bus_id}></td></tr>`
 }
 
 async function run_app(){
@@ -51,7 +68,23 @@ async function run_app(){
   const buses = calc_buses(trips);
   console.log(buses)
   const buses_rows= buses.map(render_bus).join('\n')  
-  const html=`<table class=container>${buses_rows}</table>`
+  const rendered_trips=trips.map(render_trip).join('\n')
+  const html=`<div class=container>
+    <table class=buses>${buses_rows}</table>
+    ${rendered_trips}
+  </div>`
+
   body.innerHTML = html;
+  body.addEventListener('drag',e=>{
+    e.preventDefault();
+    if (e.target instanceof HTMLElement){
+      e.target.style.left = 0+'px'
+      e.target.style.top = e.clientY+'px'
+    }
+  })  
+  body.addEventListener('dragstart',e=>{
+    e!.dataTransfer!.setDragImage( new Image(), 10, 10);
+  })
+
 }
 run_app()
